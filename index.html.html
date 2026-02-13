@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For You ❤</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #ff4d6d, #ff85a2, #ffc2d1);
+      color: white;
+      overflow: hidden;
+    }
+
+    /* Floating love emojis */
+    .love {
+      position: absolute;
+      bottom: -50px;
+      font-size: 20px;
+      animation: floatUp linear infinite;
+      opacity: 0.8;
+      z-index: 1;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+      10% { opacity: 0.9; }
+      100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+    }
+
+    .container {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(12px);
+      padding: 30px 25px 35px;
+      border-radius: 25px;
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+      animation: fadeIn 1.2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 { font-size: 2.1rem; margin: 10px 0 5px; }
+    .subtitle { font-size: 1.05rem; opacity: 0.95; margin-bottom: 20px; }
+
+    .heart { font-size: 3.2rem; animation: beat 1.1s infinite; }
+    @keyframes beat { 0%,100%{transform:scale(1);} 50%{transform:scale(1.25);} }
+
+    .section { display: none; animation: fadeIn 0.8s ease; }
+    .section.active { display: block; }
+
+    /* IMAGE SLIDES */
+    .image-slide img {
+      width: 100%;
+      border-radius: 18px;
+      margin-bottom: 10px;
+    }
+
+    /* SONG SLIDES */
+    .slide { display: none; }
+    .slide.active { display: block; }
+
+    audio { width: 100%; margin-top: 8px; }
+
+    .controls {
+      margin-top: 18px;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    button {
+      flex: 1;
+      padding: 10px;
+      border-radius: 20px;
+      border: none;
+      background: rgba(255,255,255,0.25);
+      color: white;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    button:hover { background: rgba(255,255,255,0.4); transform: scale(1.04); }
+
+    footer { margin-top: 20px; font-size: 0.85rem; opacity: 0.85; }
+  </style>
+</head>
+<body>
+
+<script>
+  const emojis = ['❤','💖','💘','💝','💕','💗'];
+  function createLove() {
+    const love = document.createElement('div');
+    love.className = 'love';
+    love.innerText = emojis[Math.floor(Math.random()*emojis.length)];
+    love.style.left = Math.random()*100 + 'vw';
+    love.style.animationDuration = (6 + Math.random()*6) + 's';
+    love.style.fontSize = (16 + Math.random()*24) + 'px';
+    document.body.appendChild(love);
+    setTimeout(() => love.remove(), 12000);
+  }
+  setInterval(createLove, 350);
+</script>
+
+<div class="container">
+  <div class="card">
+    <div class="heart">❤</div>
+
+    <!-- SECTION 1: GREETING -->
+    <div class="section active">
+      <h1>Happy Valentine’s Day My Love💘🌹</h1>
+      <div class="subtitle">This page just for my girl💕</div>
+      <p>I made this to remind you how special you are to me, and i promised i'd make it a little better🤗. You've made my days better than anyone ever possibly could've done🫠, and im proud, happy, even more happy that i know that your mine😌. Thank you for being with me in my tough times🥹. I Love You Forever And Ever And Ever💌💖.</p>
+    </div>
+
+    <!-- SECTION 2: MEMORIES (IMAGES) -->
+    <div class="section">
+      <h1>Our Memories</h1>
+      <div class="subtitle">Every picture holds a memory ✨</div>
+
+      <div class="image-slide">
+        <img src="Us.jpg" alt="memory 1">
+        <p>The days I'd never forget about💗</p>
+      </div>
+
+      <div class="image-slide">
+        <img src="View.jpg" alt="memory 2">
+        <p>The view I love the most💌🥹</p>
+      </div>
+    </div>
+
+    <!-- SECTION 3: SONGS -->
+    <div class="section">
+      <h1>Songs That Are You..💖🌷</h1>
+      <div class="subtitle">And suddenly every love songs were you🥹💌</div>
+
+      <div class="slide active">
+        <p><strong>One of all the songs which reminds me of you🌹</strong></p>
+        <audio controls><source src="Song1.mp3" type="audio/mpeg"></audio>
+      </div>
+
+      <div class="slide">
+        <p><strong>How can a background score be you🫠</strong></p>
+        <audio controls><source src="Song2.mp3" type="audio/mpeg"></audio>
+      </div>
+
+      <div class="controls">
+        <button onclick="prevSlide()">⟵</button>
+        <button onclick="nextSlide()">⟶</button>
+      </div>
+    </div>
+
+    <!-- MAIN NAVIGATION -->
+    <div class="controls">
+      <button onclick="prevSection()">Previous</button>
+      <button onclick="nextSection()">Next</button>
+    </div>
+
+    <footer>Made with all my heart ❤</footer>
+  </div>
+</div>
+
+<script>
+  /* Section control */
+  let sectionIndex = 0;
+  const sections = document.querySelectorAll('.section');
+
+  function showSection(i) {
+    sections.forEach((s, idx) => s.classList.toggle('active', idx === i));
+  }
+
+  function nextSection() {
+    sectionIndex = (sectionIndex + 1) % sections.length;
+    showSection(sectionIndex);
+  }
+
+  function prevSection() {
+    sectionIndex = (sectionIndex - 1 + sections.length) % sections.length;
+    showSection(sectionIndex);
+  }
+
+  /* Song slides */
+  let slideIndex = 0;
+  const slides = document.querySelectorAll('.slide');
+
+  function showSlide(i) {
+    slides.forEach((s, idx) => {
+      s.classList.toggle('active', idx === i);
+      const audio = s.querySelector('audio');
+      if (audio) audio.pause();
+    });
+  }
+
+  function nextSlide() {
+    slideIndex = (slideIndex + 1) % slides.length;
+    showSlide(slideIndex);
+  }
+
+  function prevSlide() {
+    slideIndex = (slideIndex - 1 + slides.length) % slides.length;
+    showSlide(slideIndex);
+  }
+</script>
+
+</body>
+</html>
